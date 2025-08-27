@@ -61,7 +61,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => 'internal error'],
+                ['error' => $e->getMessage()],//'internal error'],
                 500
             );
         }
@@ -97,7 +97,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => 'internal error'],
+                ['error' => $e->getMessage()],//'internal error'],
                 500
             );
         }
@@ -127,7 +127,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => 'internal error'],
+                ['error' => $e->getMessage()],//'internal error'],
                 500
             );
         }
@@ -165,7 +165,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => $e->getMessage()],//'internal error'],
+                ['error' => $e->getMessage()],//$e->getMessage()],//'internal error'],
                 500
             );
         }
@@ -201,7 +201,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => $e->getMessage()],//'internal error'],
+                ['error' => $e->getMessage()],//$e->getMessage()],//'internal error'],
                 500
             );
         }
