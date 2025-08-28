@@ -10,7 +10,7 @@
     DTO(Data Transfer Object)
 
 ## Tech stack:
-    php 7.4, PostgreSQL 11, laminas, doctrine, vlucas/phpdotenv, git, Dockerfile, compose.yml, linux, shell
+    php 7.4, PostgreSQL 11, nginx, laminas, doctrine, vlucas/phpdotenv, git, Dockerfile, compose.yml, linux, shell
 
 ```sql
                                          Table "public.tasks"
