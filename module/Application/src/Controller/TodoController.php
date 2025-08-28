@@ -11,11 +11,23 @@ use Application\Exception\TaskServiceException;
 use Application\Exception\TaskInputFilterException;
 use Application\Utils\JsonEncode;
 
+/**
+ * REST-контроллер для управления задачами (TODO).
+ * Обрабатывает HTTP-запросы на создание, получение, обновление и удаление задач.
+ * Использует сервисный слой и фильтр ввода для обработки бизнес-логики и валидации данных.
+ */
 class TodoController extends AbstractRestfulController
 {
     private TaskServiceContract $taskService;
     private TaskInputFilterContract $inputFilter;
 
+    /**
+     * Конструктор контроллера.
+     * Инъекция зависимостей: сервис задач и фильтр входных данных.
+     *
+     * @param TaskServiceContract $taskService Сервис для выполнения бизнес-операций над задачами
+     * @param TaskInputFilterContract $inputFilter Фильтр для валидации и преобразования входных данных
+     */
     public function __construct(
         TaskServiceContract     $taskService,
         TaskInputFilterContract $inputFilter
@@ -26,7 +38,11 @@ class TodoController extends AbstractRestfulController
     }
 
     /**
-     * POST /api/todo - Create a new task
+     * Обрабатывает POST-запрос для создания новой задачи.
+     * Декодирует данные, переданные в теле запроса, создаёт задачу через сервис.
+     *
+     * @param array $data Данные новой задачи в формате массива
+     * @return \Laminas\Stdlib\ResponseInterface JSON-ответ с результатом операции и статусом 201 при успехе
      */
     public function create($data)
     {
@@ -67,6 +83,12 @@ class TodoController extends AbstractRestfulController
         }
     }
 
+    /**
+     * Обрабатывает GET-запрос для получения задачи по ID.
+     *
+     * @param string|int $id Идентификатор задачи
+     * @return \Laminas\Stdlib\ResponseInterface JSON-ответ с данными задачи или сообщением об ошибке
+     */
     public function get($id)
     {
         try {
@@ -103,6 +125,11 @@ class TodoController extends AbstractRestfulController
         }
     }
 
+    /**
+     * Обрабатывает GET-запрос для получения списка всех задач.
+     *
+     * @return \Laminas\Stdlib\ResponseInterface JSON-ответ с массивом задач или сообщением об ошибке
+     */
     public function getList()
     {
         try {
@@ -133,10 +160,17 @@ class TodoController extends AbstractRestfulController
         }
     }
 
+    /**
+     * Обрабатывает PUT-запрос для обновления задачи по ID.
+     *
+     * @param string|int $id Идентификатор задачи
+     * @param array $data Обновлённые данные задачи
+     * @return \Laminas\Stdlib\ResponseInterface JSON-ответ с результатом операции
+     */
     public function update($id, $data)
     {
         try {
-            $task = $this->inputFilter->decode($data)->setId($id);
+            $task = $this->inputFilter->decode($data)->setId((int)$id);
 
             $message = $this->taskService->updateTaskByID($task);
 
@@ -165,12 +199,18 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => $e->getMessage()],//$e->getMessage()],//'internal error'],
+                ['error' => $e->getMessage()],//'internal error'],
                 500
             );
         }
     }
 
+    /**
+     * Обрабатывает DELETE-запрос для удаления задачи по ID.
+     *
+     * @param string|int $id Идентификатор задачи
+     * @return \Laminas\Stdlib\ResponseInterface JSON-ответ с результатом операции
+     */
     public function delete($id)
     {
         try {
@@ -201,7 +241,7 @@ class TodoController extends AbstractRestfulController
         } catch (\Exception $e) {
             return JsonEncode::encode(
                 $this->getResponse(),
-                ['error' => $e->getMessage()],//$e->getMessage()],//'internal error'],
+                ['error' => $e->getMessage()],//'internal error'],
                 500
             );
         }

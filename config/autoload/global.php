@@ -1,22 +1,25 @@
 <?php
 
 /**
- * Global Configuration Override
+ * Глобальная конфигурация переопределений.
  *
- * You can use this file for overriding configuration values from modules, etc.
- * You would place values in here that are agnostic to the environment and not
- * sensitive to security.
+ * Этот файл используется для задания конфигурационных значений, которые:
+ * - являются общими для всех окружений (dev, prod и т.д.),
+ * - не содержат конфиденциальных данных (или загружают их безопасно через .env).
  *
- * NOTE: In practice, this file will typically be INCLUDED in your source
- * control, so do not include passwords or other sensitive information in this
- * file.
+ * ВНИМАНИЕ: Этот файл, как правило, добавляется в систему контроля версий (например, Git),
+ * поэтому в нём НЕ ДОЛЖНО быть паролей, ключей API или другой чувствительной информации.
+ * Чувствительные данные должны загружаться из файла .env.
  */
-
 use Dotenv\Dotenv;
 
+// Загрузка переменных окружения из файла .env в корне проекта
+// Используется createUnsafeImmutable, чтобы избежать ошибок при отсутствии переменных окружения в CLI
 $dotenv = Dotenv::createUnsafeImmutable(__DIR__ . '/../../');
 $dotenv->load();
 
+// Установка значений по умолчанию для параметров подключения к базе данных
+// Если переменная окружения не задана — используется значение по умолчанию
 $_ENV['DB_HOST'] = $_ENV['DB_HOST'] ?? '127.0.0.1';
 $_ENV['DB_PORT'] = $_ENV['DB_PORT'] ?? '5432';
 $_ENV['DB_USER'] = $_ENV['DB_USER'] ?? 'postgres';
@@ -25,6 +28,8 @@ $_ENV['DB_NAME'] = $_ENV['DB_NAME'] ?? 'postgres';
 $_ENV['DB_DRIVER'] = $_ENV['DB_DRIVER'] ?? 'pdo_pgsql';
 $_ENV['DB_CHARSET'] = $_ENV['DB_CHARSET'] ?? 'UTF8';
 
+// Возврат конфигурации для Doctrine ORM
+// Определяет параметры подключения к базе данных по умолчанию
 return [
     'doctrine' => [
         'connection' => [

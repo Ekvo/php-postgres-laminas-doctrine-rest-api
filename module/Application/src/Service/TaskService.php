@@ -12,15 +12,37 @@ use Application\Entity\MessageResponse;
 
 use Application\Exception\TaskServiceException;
 
+/**
+ * Сервисный класс, реализующий бизнес-логику для управления задачами.
+ * Выполняет операции создания, получения, обновления и удаления задач,
+ * используя репозиторий для взаимодействия с хранилищем данных.
+ */
 class TaskService implements TaskServiceContract
 {
+    /**
+     * Репозиторий для выполнения операций с хранилищем задач
+     * @var TaskRepositoryContract
+     */
     private TaskRepositoryContract $taskRepository;
 
+    /**
+     * Конструктор сервиса.
+     * Инъекция зависимости: репозиторий задач.
+     *
+     * @param TaskRepositoryContract $taskRepository Репозиторий для работы с данными задач
+     */
     public function __construct(TaskRepositoryContract $taskRepository)
     {
         $this->taskRepository = $taskRepository;
     }
 
+    /**
+     * Создаёт новую задачу.
+     *
+     * @param Task $task Объект задачи, который необходимо сохранить
+     * @return MessageResponse Сообщение об успешном создании
+     * @throws TaskServiceException Если не удалось сохранить задачу
+     */
     public function createTask(Task $task): MessageResponse
     {
         $id = $this->taskRepository->create($task);
@@ -31,6 +53,13 @@ class TaskService implements TaskServiceContract
         return new MessageResponse('create_status');
     }
 
+    /**
+     * Возвращает задачу по её идентификатору.
+     *
+     * @param int $id Идентификатор задачи
+     * @return TaskResponse Ответ с данными задачи
+     * @throws TaskServiceException Если задача не найдена
+     */
     public function getTaskById(int $id): TaskResponse
     {
         $task = $this->taskRepository->findById($id);
@@ -44,6 +73,12 @@ class TaskService implements TaskServiceContract
         return $taskResponse;
     }
 
+    /**
+     * Возвращает список всех задач.
+     *
+     * @return TaskListResponse Ответ, содержащий список задач
+     * @throws TaskServiceException Если задачи не найдены
+     */
     public function getListOfTasks(): TaskListResponse
     {
         $tasks = $this->taskRepository->getList();
@@ -57,6 +92,12 @@ class TaskService implements TaskServiceContract
         return  $taskListResponse;
     }
 
+    /**
+     * Обновляет существующую задачу по её идентификатору.
+     *
+     * @param Task $task Объект задачи с обновлёнными данными
+     * @return MessageResponse Сообщение об успешном обновлении
+     */
     public function updateTaskByID(Task $task): MessageResponse
     {
         $this->taskRepository->updateByID($task);
@@ -64,6 +105,12 @@ class TaskService implements TaskServiceContract
         return new MessageResponse('update_status');
     }
 
+    /**
+     * Удаляет задачу по её идентификатору.
+     *
+     * @param int $id Идентификатор задачи, которую необходимо удалить
+     * @return MessageResponse Сообщение об успешном удалении
+     */
     public function deleteTaskByID(int $id): MessageResponse
     {
         $this->taskRepository->deleteByID($id);

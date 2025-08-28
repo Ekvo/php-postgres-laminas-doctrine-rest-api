@@ -48,7 +48,7 @@ class Task
     /**
      * Получить ID задачи
      *
-     * @return int|null
+     * @return int|null Идентификатор задачи или null, если не установлен
      */
     public function getId()
     {
@@ -58,7 +58,7 @@ class Task
     /**
      * Получить заголовок задачи
      *
-     * @return string|null
+     * @return string|null Заголовок задачи или null, если не установлен
      */
     public function getTitle()
     {
@@ -68,7 +68,7 @@ class Task
     /**
      * Получить описание задачи
      *
-     * @return string|null
+     * @return string|null Описание задачи или null, если не установлено
      */
     public function getDescription()
     {
@@ -78,7 +78,7 @@ class Task
     /**
      * Получить дату создания задачи
      *
-     * @return DateTime|null
+     * @return DateTime|null Объект даты и времени или null, если не установлен
      */
     public function getCreatedAt()
     {
@@ -88,7 +88,7 @@ class Task
     /**
      * Установить ID задачи
      *
-     * @param int $id
+     * @param int $id Идентификатор задачи
      * @return self
      */
     public function setId(int $id): self
@@ -100,7 +100,7 @@ class Task
     /**
      * Установить заголовок задачи
      *
-     * @param string $title
+     * @param string $title Заголовок задачи
      * @return self
      */
     public function setTitle(string $title): self
@@ -112,7 +112,7 @@ class Task
     /**
      * Установить описание задачи
      *
-     * @param string $description
+     * @param string $description Описание задачи
      * @return self
      */
     public function setDescription(string $description): self
