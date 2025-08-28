@@ -4,8 +4,8 @@ services:
   # PHP Application
   app:
     build:
-      context: .                    # ← Контекст: корень проекта (где composer.json)
-      dockerfile: docker/app/Dockerfile   # ← Путь к Dockerfile
+      context: .
+      dockerfile: docker/app/Dockerfile
     container_name: php_app
     working_dir: /var/www/html
     volumes:

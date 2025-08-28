@@ -7,7 +7,6 @@
  */
 return [
     'Laminas\InputFilter',
-    'Laminas\Db',
     'Laminas\Router',
     'Laminas\Validator',
     'Application',

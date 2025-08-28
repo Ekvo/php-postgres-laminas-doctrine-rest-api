@@ -1,3 +1,14 @@
+# php-postgres-laminas-doctrine-rest-api 
+
+Сервис постановки и контроля выполнения задач предоставляет возможность пользователю сервиса создавать и просматривать свою коллекцию задач. Все данные пользователя сохраняются в БД. Взаимодействие пользователя с сервисом осуществляется через API. Подсистему пользователей с аутентификацией и авторизацией реализовывать не нужно. Пользоваться сервисом будет единственный анонимный пользователь.
+
+## Tech stack:
+* php 7.4, PostgreSQL 11
+* laminas/laminas-skeleton-installer, laminas/laminas-validator, laminas/laminas-filter, laminas/laminas-inputfilter,  doctrine/migrations, 
+ doctrine/migrations, pgx/v5, net/http, caarlos0/env/v11, testify, jwt, git, Dockerfile, compose.yaml, linux, shell
+
+
+
 # laminas-mvc-skeleton
 
 ## Introduction
